@@ -15,7 +15,7 @@ class PreferencesDialog extends JDialog {
 	private static final long serialVersionUID = -7316049960822654751L;
 	JComboBox<String> chBgColor = new JComboBox<String>();
 	JComboBox<String> chFontFamily = new JComboBox<String>();
-	JComboBox<Double> chFontSize = new JComboBox<Double>();
+	JComboBox<Integer> chFontSize = new JComboBox<Integer>();
 	JButton bSave = new JButton("Save");
 	JButton bCancel = new JButton("Cancel");
 	
@@ -40,7 +40,7 @@ class PreferencesDialog extends JDialog {
 			//System.out.println("Test UserPreferences created.");
 			UserPreferences test = new UserPreferences(chBgColor.getSelectedItem().toString(), 
 					chFontFamily.getSelectedItem().toString(), 
-					Double.parseDouble(chFontSize.getSelectedItem().toString()));
+					Integer.parseInt(chFontSize.getSelectedItem().toString()));
 			test.serialize();
 		});
 		
@@ -96,7 +96,7 @@ class PreferencesDialog extends JDialog {
 			
 				String fontSizeVal;
 				while((fontSizeVal = reader.readLine()) != null) {
-					chFontSize.addItem(Double.parseDouble(fontSizeVal));
+					chFontSize.addItem(Integer.parseInt(fontSizeVal));
 				}
 		}
 		catch(IOException ioe) {
