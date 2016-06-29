@@ -13,16 +13,19 @@ class PreferencesDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -7316049960822654751L;
-	JComboBox<String> chBgColor = new JComboBox<String>();
-	JComboBox<String> chFontFamily = new JComboBox<String>();
-	JComboBox<Integer> chFontSize = new JComboBox<Integer>();
-	JButton bSave = new JButton("Save");
-	JButton bCancel = new JButton("Cancel");
+	private JComboBox<String> chBgColor = new JComboBox<String>();
+	private JComboBox<String> chFontFamily = new JComboBox<String>();
+	private JComboBox<Integer> chFontSize = new JComboBox<Integer>();
+	private JButton bSave = new JButton("Save");
+	private JButton bCancel = new JButton("Cancel");
 	
 	PreferencesDialog(JFrame parent) {
 		super(parent, "Preferences");
 		FlowLayout fl = new FlowLayout();
 		setLayout(fl);
+		getContentPane().setBackground(parent.getContentPane().getBackground());
+		bSave.setFont(parent.getFont());
+		bCancel.setFont(parent.getFont());
 		populateBgColor();
 		populateFontFamily();
 		populateFontSize();
@@ -35,13 +38,11 @@ class PreferencesDialog extends JDialog {
         
 		//Save button processing using lambda expression
 		bSave.addActionListener(event-> {
-			
-			//UserPreferences test = new UserPreferences("GREEN", "Arial", 12);
-			//System.out.println("Test UserPreferences created.");
-			UserPreferences test = new UserPreferences(chBgColor.getSelectedItem().toString(), 
+			UserPreferences userPrefs = new UserPreferences(chBgColor.getSelectedItem().toString(), 
 					chFontFamily.getSelectedItem().toString(), 
 					Integer.parseInt(chFontSize.getSelectedItem().toString()));
-			test.serialize();
+			userPrefs.serialize();
+			dispose();
 		});
 		
 		//Cancel button processing using lambda expression

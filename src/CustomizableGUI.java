@@ -20,6 +20,7 @@ class CustomizableGUI extends JFrame {
 	private JButton bPrefs = new JButton("Preferences");
 	
 	CustomizableGUI() {
+		setTitle("Customizable GUI");
 		FlowLayout fl = new FlowLayout();
 		setLayout(fl);
 		UserPreferences userPrefs = new UserPreferences();
@@ -39,7 +40,7 @@ class CustomizableGUI extends JFrame {
 		//Preferences button processing using lambda expression
 		bPrefs.addActionListener(event-> {
 			PreferencesDialog prefs = new PreferencesDialog(this);
-			prefs.setSize(400, 150);
+			prefs.setSize(350, 125);
 			prefs.setVisible(true);
 		});
 		
@@ -50,6 +51,14 @@ class CustomizableGUI extends JFrame {
 				System.exit(0);
 			}
 		});
+	}
+	
+	public Color getBgColor() {
+		return bgColor;
+	}
+	
+	public Font getFont() {
+		return font;
 	}
 	
 	public static void main(String args[]) {
