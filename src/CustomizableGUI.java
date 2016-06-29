@@ -9,22 +9,30 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+/**
+ * Simple customizable GUI. Preferences dialog saves the user's choices
+ * and reloads them the next time the window is opened.
+ * 
+ * @author David Lall
+ */
+
 class CustomizableGUI extends JFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6574305728106595108L;
+	private final String USER_PREFS_LOCATION = "UserPrefs.ser";
 	private Color bgColor;
 	private Font font;
 	private JTextField txtField = new JTextField(30);
 	private JButton bPrefs = new JButton("Preferences");
 	
+	/**
+	 * Standard setup for a JFrame. Gets the background color, font family, 
+	 * and font size from the UserPrefs.ser file.
+	 */
 	CustomizableGUI() {
 		setTitle("Customizable GUI");
 		FlowLayout fl = new FlowLayout();
 		setLayout(fl);
-		UserPreferences userPrefs = new UserPreferences();
-		userPrefs.deserialize("UserPrefs.ser");
+		UserPreferences userPrefs = new UserPreferences(USER_PREFS_LOCATION);
 		try {
 		    Field field = Class.forName("java.awt.Color").getField(userPrefs.getBackgroundColor());
 		    bgColor = (Color)field.get(null);
@@ -53,10 +61,11 @@ class CustomizableGUI extends JFrame {
 		});
 	}
 	
-	public Color getBgColor() {
-		return bgColor;
-	}
-	
+	/**
+	 * Getter for the font family.
+	 * @return
+	 * 		Font family.
+	 */
 	public Font getFont() {
 		return font;
 	}

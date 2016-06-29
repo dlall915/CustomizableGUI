@@ -1,4 +1,5 @@
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,10 +10,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 class PreferencesDialog extends JDialog {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7316049960822654751L;
+	private final String BG_COLOR_LOCATION = "bgcolor.txt";
+	private final String FONT_FAMILY_LOCATION = "fontfamily.txt";
+	private final String FONT_SIZE_LOCATION = "fontsize.txt";
 	private JComboBox<String> chBgColor = new JComboBox<String>();
 	private JComboBox<String> chFontFamily = new JComboBox<String>();
 	private JComboBox<Integer> chFontSize = new JComboBox<Integer>();
@@ -24,8 +25,7 @@ class PreferencesDialog extends JDialog {
 		FlowLayout fl = new FlowLayout();
 		setLayout(fl);
 		getContentPane().setBackground(parent.getContentPane().getBackground());
-		bSave.setFont(parent.getFont());
-		bCancel.setFont(parent.getFont());
+		setAllFonts(parent.getFont());
 		populateBgColor();
 		populateFontFamily();
 		populateFontSize();
@@ -51,9 +51,12 @@ class PreferencesDialog extends JDialog {
 		});
 	}
 	
+	/**
+	 * Reads in all the values for the background colors from a file.
+	 */
 	private void populateBgColor() {
 		try (FileInputStream myFile = 
-				new FileInputStream("bgcolor.txt");
+				new FileInputStream(BG_COLOR_LOCATION);
 			InputStreamReader inputStreamReader = 
 				new InputStreamReader(myFile, "UTF8");
 			BufferedReader reader = 
@@ -69,9 +72,12 @@ class PreferencesDialog extends JDialog {
 		}
 	}
 	
+	/**
+	 * Reads in all the values for the font family from a file.
+	 */
 	private void populateFontFamily() {
 		try (FileInputStream myFile = 
-				new FileInputStream("fontfamily.txt");
+				new FileInputStream(FONT_FAMILY_LOCATION);
 			InputStreamReader inputStreamReader = 
 				new InputStreamReader(myFile, "UTF8");
 			BufferedReader reader = 
@@ -87,9 +93,12 @@ class PreferencesDialog extends JDialog {
 		}
 	}
 	
+	/**
+	 * Reads in all the values for the font size from a file.
+	 */
 	private void populateFontSize() {
 		try (FileInputStream myFile = 
-				new FileInputStream("fontsize.txt");
+				new FileInputStream(FONT_SIZE_LOCATION);
 			InputStreamReader inputStreamReader = 
 				new InputStreamReader(myFile, "UTF8");
 			BufferedReader reader = 
@@ -103,5 +112,18 @@ class PreferencesDialog extends JDialog {
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Sets the fonts of everything in the Dialog box to a given font.
+	 * @param font
+	 * 		Some font.
+	 */
+	private void setAllFonts(Font font) {
+		chBgColor.setFont(font);
+		chFontFamily.setFont(font);
+		chFontSize.setFont(font);
+		bSave.setFont(font);
+		bCancel.setFont(font);
 	}
 }
